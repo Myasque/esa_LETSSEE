@@ -1,0 +1,8 @@
+filename,use_gps,use_glonass,use_galileo
+NEWE182A00_modified_R.nmea,True,False,True
+MTLD182A00_modified_R.nmea,True,False,True
+MTLD182A00_modified_R.nmea,True,False,True
+NWCS182A00_modified_R.nmea,True,False,True
+NEWE182A00_modified_R.nmea,True,False,True
+NWCS182A00_modified_R.nmea,True,False,True
+MTLD182A00_modified_R.nmea,True,False,True
