@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNSS Data Input</title>
+</head>
+<body>
+    <h1>GNSS Data Input</h1>
+    <form id="gnssForm">
+        <label for="Svid">Svid:</label>
+        <input type="text" id="Svid" name="Svid" required><br>
+
+        <label for="ConstellationType">Constellation Type:</label>
+        <input type="text" id="ConstellationType" name="ConstellationType" required><br>
+
+        <label for="TimeOffsetNanos">Time Offset Nanos:</label>
+        <input type="text" id="TimeOffsetNanos" name="TimeOffsetNanos" required><br>
+
+        <label for="State">State:</label>
+        <input type="text" id="State" name="State" required><br>
+
+        <label for="ReceivedSvTimeNanos">Received Sv Time Nanos:</label>
+        <input type="text" id="ReceivedSvTimeNanos" name="ReceivedSvTimeNanos" required><br>
+
+	      <label for="ReceivedSvTimeUncertaintyNanos">Received Sv Time Uncertainty Nanos:</label>
+        <input type="text" id="ReceivedSvTimeUncertaintyNanos" name="ReceivedSvTimeUncertaintyNanos" required><br>
+
+        <label for="Cn0DbHz">Cn0 DbHz:</label>
+        <input type="text" id="Cn0DbHz" name="Cn0DbHz" required><br>
+
+        <label for="PseudorangeRateMetersPerSecond">Pseudorange Rate Meters Per Second:</label>
+        <input type="text" id="PseudorangeRateMetersPerSecond" name="PseudorangeRateMetersPerSecond" required><br>
+
+        <label for="PseudorangeRateUncertaintyMetersPerSecond">Pseudorange Rate Uncertainty Meters Per Second:</label>
+        <input type="text" id="PseudorangeRateUncertaintyMetersPerSecond" name="PseudorangeRateUncertaintyMetersPerSecond" required><br>
+
+        <label for="AccumulatedDeltaRangeState">Accumulated Delta Range State:</label>
+        <input type="text" id="AccumulatedDeltaRangeState" name="AccumulatedDeltaRangeState" required><br>
+
+        <label for="AccumulatedDeltaRangeMeters">Accumulated Delta Range Meters:</label>
+        <input type="text" id="AccumulatedDeltaRangeMeters" name="AccumulatedDeltaRangeMeters" required><br>
+
+        <label for="AccumulatedDeltaRangeUncertaintyMeters">Accumulated Delta Range Uncertainty Meters:</label>
+        <input type="text" id="AccumulatedDeltaRangeUncertaintyMeters" name="AccumulatedDeltaRangeUncertaintyMeters" required><br>
+
+        <label for="CarrierFrequencyHz">Carrier Frequency Hz:</label>
+        <input type="text" id="CarrierFrequencyHz" name="CarrierFrequencyHz" required><br>
+
+        <label for="MultipathIndicator">Multipath Indicator:</label>
+        <input type="text" id="MultipathIndicator" name="MultipathIndicator" required><br>
+
+        <label for="CarrierFreqHz">Carrier Freq Hz:</label>
+        <input type="text" id="CarrierFreqHz" name="CarrierFreqHz" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        document.getElementById("gnssForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+
+            fetch("/gnss_data", {
+                method: "POST",
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "/success.html";
+                } else {
+                    document.getElementById("message").innerText = data.message;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+
+            this.reset();
+        });
+    </script>
+</body>
+</html>
